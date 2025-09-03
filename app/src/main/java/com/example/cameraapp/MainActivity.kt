@@ -1,5 +1,6 @@
 package com.example.cameraapp
 
+import android.Manifest
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -46,7 +47,9 @@ fun MainScreen(modifier: Modifier = Modifier) {
                 Text("Oh noes!")
             }
         ) {
-            CameraPreview()
+            Permission(permission = Manifest.permission.RECORD_AUDIO) {
+                CameraPreview()
+            }
         }
     }
 }
@@ -60,6 +63,7 @@ fun CameraPreview(
     val lifecycleOwner = LocalLifecycleOwner.current
 
     LaunchedEffect(Unit) {
+        viewModel.startGeminiSession()
         viewModel.bind(lifecycleOwner)
     }
 
